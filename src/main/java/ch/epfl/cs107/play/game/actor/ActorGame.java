@@ -104,4 +104,3 @@ abstract class ActorGame implements Game, Initialiser {
 }
 
 // The actual rendering will be done now, by the program loop
-   
