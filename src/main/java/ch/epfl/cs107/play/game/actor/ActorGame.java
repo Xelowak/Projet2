@@ -45,7 +45,7 @@ public abstract class ActorGame implements Game {
 	public Actor getActor(int index) {
 		return actors.get(index);
 	}
-	
+
 	public Keyboard getKeyboard() {
 		return window.getKeyboard () ;
 	}
