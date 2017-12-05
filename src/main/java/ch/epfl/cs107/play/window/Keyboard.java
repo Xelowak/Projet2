@@ -5,7 +5,7 @@ package ch.epfl.cs107.play.window;
  */
 public interface Keyboard {
     // TODO put int constants here, instead of using KeyEvent directly?
-    
+
     public Button get(int code);
     
 }

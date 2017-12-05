@@ -8,17 +8,16 @@ package ch.epfl.cs107.play.game.actor;
 
 import ch.epfl.cs107.play.game.Game;
 import ch.epfl.cs107.play.io.FileSystem;
-import ch.epfl.cs107.play.math.Initialiser;
-import ch.epfl.cs107.play.math.Positionable;
-import ch.epfl.cs107.play.math.Transform;
-import ch.epfl.cs107.play.math.Vector;
-import ch.epfl.cs107.play.math.World;
+import ch.epfl.cs107.play.math.*;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
 import ch.epfl.cs107.play.window.Window;
+
 import java.util.ArrayList;
 
-abstract class ActorGame implements Game, Initialiser {
+public abstract class ActorGame implements Game {
+
+	// Attributes
 	private ArrayList<Actor> actors = new ArrayList<Actor>();
 	private World world;
 	private FileSystem fileSystem;
@@ -30,30 +29,36 @@ abstract class ActorGame implements Game, Initialiser {
 	private Positionable viewCandidate;
 	private static final float VIEW_TARGET_VELOCITY_COMPENSATION = 0.2f;
 	private static final float VIEW_INTERPOLATION_RATIO_PER_SECOND = 0.1f;
-	private static final float VIEW_SCALE = 10.0f;
-	
-	public ActorGame(World w, FileSystem f, Window win ) {
-		world = w; 
-		fileSystem = f;
-		window = win;
-	}
-	
+	private static final float VIEW_SCALE = 20.0f;
+
+	// Function to add an Actor to the ArrayList
 	public void addActor(Actor a) {
 		actors.add(a);
+	}
+
+	// Function to remove an Actor from the ArrayList
+	public void removeActor(Actor a) {
+		int index = actors.indexOf(a);
+		actors.remove(index);
+	}
+
+	public Actor getActor(int index) {
+		return actors.get(index);
 	}
 	
 	public Keyboard getKeyboard() {
 		return window.getKeyboard () ;
 	}
-	
+
+	// Function to get the window
 	public Canvas getCanvas() {
 		return window ;
-	}	
-	
+	}
+
 	public void setViewCandidate(Positionable p) {
 		viewCandidate = p;
 	}
-	
+
 	public boolean begin(Window window, FileSystem fileSystem) {
         
 		// Initial position of the view
@@ -71,15 +76,42 @@ abstract class ActorGame implements Game, Initialiser {
         
         return true;
 	}
-	
+
+	// Initialise an entity with its position
+	public Entity initalise(Vector vector, boolean fixed) {
+		EntityBuilder entityBuilder = world.createEntityBuilder();
+		entityBuilder.setFixed(fixed);
+		entityBuilder.setPosition(vector);
+		return entityBuilder.build();
+	}
+
+	// Initialise an entity (overloaded initialise)
+	public Entity initalise(boolean fixed) {
+		EntityBuilder entityBuilder = world.createEntityBuilder();
+		entityBuilder.setFixed(fixed);
+		return entityBuilder.build();
+	}
+
+	public WheelConstraintBuilder getWheelConstraintBuilder() {
+		return Game.super.getWheelConstraintBuilder(world);
+	}
+
+	public PrismaticConstraintBuilder getPrismaticConstraintBuilder() {
+		return Game.super.getPrismaticConstraintBuilder(world);
+	}
+
+	@Override
 	public void end() {
 		
 	}
-	
+
+	@Override
 	public void update(float deltaTime) {
-    	
+
+		// Call the super method update
 		world.update(deltaTime);
-		
+
+		// Updates each Actor of the ArrayList
 		for(int i = 0; i < actors.size(); i++) {
 			actors.get(i).update(deltaTime);
 		}
@@ -94,7 +126,8 @@ abstract class ActorGame implements Game, Initialiser {
     	// Compute new viewport
     	Transform viewTransform = Transform.I.scaled(VIEW_SCALE).translated(viewCenter);
     	window.setRelativeTransform(viewTransform) ;
-    	
+
+    	// Draw each Actor of the ArrayList
     	for(int i = 0; i < actors.size(); i++) {
     		actors.get(i).draw(window);
     	}
@@ -102,6 +135,3 @@ abstract class ActorGame implements Game, Initialiser {
     }
 	
 }
-
-// The actual rendering will be done now, by the program loop
-   

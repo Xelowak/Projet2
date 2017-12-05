@@ -1,43 +1,25 @@
 package ch.epfl.cs107.play.window.swing;
 
+import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.Node;
+import ch.epfl.cs107.play.math.Shape;
 import ch.epfl.cs107.play.math.Transform;
 import ch.epfl.cs107.play.math.Vector;
-import ch.epfl.cs107.play.io.FileSystem;
-import ch.epfl.cs107.play.math.Shape;
-import ch.epfl.cs107.play.window.Mouse;
-import ch.epfl.cs107.play.window.Keyboard;
 import ch.epfl.cs107.play.window.Button;
 import ch.epfl.cs107.play.window.Image;
+import ch.epfl.cs107.play.window.*;
 import ch.epfl.cs107.play.window.Window;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.MouseInfo;
-import java.awt.Point;
-import java.awt.PointerInfo;
-import java.awt.RenderingHints;
-import java.awt.Toolkit;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 import java.awt.image.BufferStrategy;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 
 /**
  * Swing implementation of window context.
@@ -160,7 +142,7 @@ public class SwingWindow extends Node implements Window {
 		canvas.setFocusable(true);
 		canvas.setFocusTraversalKeysEnabled(false);
 		canvas.setIgnoreRepaint(true);
-		canvas.setBackground(Color.BLACK);
+		canvas.setBackground(new Color(119, 181, 254));
 
 		// Create Swing frame
 		frame = new JFrame(title);
@@ -189,7 +171,7 @@ public class SwingWindow extends Node implements Window {
 
 		// Show frame
 		frame.pack();
-		frame.setSize(640, 480);
+		frame.setSize(1920, 1080);
 		frame.setVisible(true);
 	}
 

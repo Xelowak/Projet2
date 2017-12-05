@@ -5,24 +5,13 @@
 
 package ch.epfl.cs107.play.game.tutorial;
 
-import java.awt.Color;
-import java.awt.event.KeyEvent;
-
 import ch.epfl.cs107.play.game.Game;
 import ch.epfl.cs107.play.game.actor.ImageGraphics;
-import ch.epfl.cs107.play.game.actor.ShapeGraphics;
 import ch.epfl.cs107.play.io.FileSystem;
-import ch.epfl.cs107.play.math.Circle;
-import ch.epfl.cs107.play.math.Entity;
-import ch.epfl.cs107.play.math.EntityBuilder;
-import ch.epfl.cs107.play.math.PartBuilder;
-import ch.epfl.cs107.play.math.Polygon;
-import ch.epfl.cs107.play.math.RevoluteConstraintBuilder;
-import ch.epfl.cs107.play.math.RopeConstraintBuilder;
-import ch.epfl.cs107.play.math.Transform;
-import ch.epfl.cs107.play.math.Vector;
-import ch.epfl.cs107.play.math.World;
+import ch.epfl.cs107.play.math.*;
 import ch.epfl.cs107.play.window.Window;
+
+import java.awt.event.KeyEvent;
 
 public class ScaleGame implements Game {
 	// Store context
@@ -114,22 +103,18 @@ public class ScaleGame implements Game {
 	    partBuilder.build () ;
 	    // Note : we do not need to keep a reference on partBuilder
         
-	    ballGraphics = new ImageGraphics("explosive.11.png", 2.0f*0.5f, 2.0f*0.5f, 
-	    new Vector(0.5f, 0.5f));
+	    ballGraphics = new ImageGraphics("explosive.11.png", 2.0f*0.5f, 2.0f*0.5f, new Vector(0.5f, 0.5f));
         ballGraphics.setParent(ball);
 //-------------------------------------------------------------------------------------	            
         
        
-        RevoluteConstraintBuilder revoluteConstraintBuilder =
-        		world.createRevoluteConstraintBuilder () ;
-        revoluteConstraintBuilder.setFirstEntity(block) ;
-        revoluteConstraintBuilder.setFirstAnchor(new Vector(10.f /2.f,
-        (1.0f *7.f) /4.f)) ;
-        revoluteConstraintBuilder.setSecondEntity(plank) ;
-        revoluteConstraintBuilder.setSecondAnchor(new Vector(5.f /2.f,
-        0.2f /2.f)) ;
-        revoluteConstraintBuilder.setInternalCollision(true) ;
-        revoluteConstraintBuilder.build () ;
+        RevoluteConstraintBuilder revoluteConstraintBuilder = world.createRevoluteConstraintBuilder();
+        revoluteConstraintBuilder.setFirstEntity(block);
+        revoluteConstraintBuilder.setFirstAnchor(new Vector(10.f /2.f, (1.0f *7.f) /4.f));
+        revoluteConstraintBuilder.setSecondEntity(plank);
+        revoluteConstraintBuilder.setSecondAnchor(new Vector(5.f /2.f, 0.2f /2.f));
+        revoluteConstraintBuilder.setInternalCollision(true);
+        revoluteConstraintBuilder.build();
         
         // Successfully initiated
         return true;
@@ -137,15 +122,15 @@ public class ScaleGame implements Game {
     
 
     public void update(float deltaTime) {
-    	
+
     	if (window.getKeyboard().get(KeyEvent.VK_LEFT).isDown()) {
-    		ball.applyAngularForce (10.0f) ;
-    	}else if (window.getKeyboard().get(KeyEvent.VK_RIGHT).isDown()) {
-    		ball.applyAngularForce ( -10.0f) ;
+    		ball.applyAngularForce(10.0f) ;
+    	} else if (window.getKeyboard().get(KeyEvent.VK_RIGHT).isDown()) {
+    		ball.applyAngularForce( -10.0f) ;
     	}
-   
+
     	world.update(deltaTime) ;
-    	
+
     	// we must place the camera where we want
     	// We will look at the origin (identity) and increase the view size a bit
     	window.setRelativeTransform(Transform.I.scaled (10.0f)) ;
@@ -153,7 +138,7 @@ public class ScaleGame implements Game {
     	blockGraphics.draw(window);
     	plankGraphics.draw(window);
     	ballGraphics.draw(window);
-      
+
         // The actual rendering will be done now, by the program loop
     }
 

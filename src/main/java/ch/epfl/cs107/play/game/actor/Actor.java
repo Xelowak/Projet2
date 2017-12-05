@@ -8,7 +8,7 @@ package ch.epfl.cs107.play.game.actor;
 
 import ch.epfl.cs107.play.math.Positionable;
 
-interface Actor extends Positionable, Graphics {
+public interface Actor extends Positionable, Graphics {
 	/**
 	* Simulates a single time step.
 	* @param deltaTime elapsed time since last update , in

@@ -53,7 +53,17 @@ public final class Vector implements Serializable {
     public Vector opposite() {
         return new Vector(-x, -y);
     }
-    
+
+    /** @return vector with negated Y */
+    public Vector oppositeY() {
+        return new Vector(x, -y);
+    }
+
+    /** @return vector with negated X */
+    public Vector oppositeX() {
+        return new Vector(-x, y);
+    }
+
     /**
      * @param other right-hand operand, not null
      * @return sum, not null

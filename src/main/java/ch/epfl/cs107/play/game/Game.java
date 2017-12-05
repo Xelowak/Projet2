@@ -1,6 +1,9 @@
 package ch.epfl.cs107.play.game;
 
 import ch.epfl.cs107.play.io.FileSystem;
+import ch.epfl.cs107.play.math.PrismaticConstraintBuilder;
+import ch.epfl.cs107.play.math.WheelConstraintBuilder;
+import ch.epfl.cs107.play.math.World;
 import ch.epfl.cs107.play.window.Window;
 
 /**
@@ -24,5 +27,12 @@ public interface Game {
     
     /** Cleans up things, called even if initialisation failed. */
     public abstract void end();
-    
+
+    public default WheelConstraintBuilder getWheelConstraintBuilder(World world) {
+        return world.createWheelConstraintBuilder();
+    }
+
+    public default PrismaticConstraintBuilder getPrismaticConstraintBuilder(World world) {
+        return world.createPrismaticConstraintBuilder();
+    }
 }
